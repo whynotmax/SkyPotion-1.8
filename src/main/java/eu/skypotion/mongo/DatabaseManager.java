@@ -6,7 +6,9 @@ import eu.skypotion.mongo.player.PotionPlayerManager;
 import eu.skypotion.mongo.player.repository.PotionPlayerRepository;
 import eu.skypotion.mongo.season.SeasonManager;
 import eu.skypotion.mongo.season.repository.SeasonRepository;
+import lombok.Getter;
 
+@Getter
 public class DatabaseManager {
 
     MongoManager mongoManager;
@@ -23,7 +25,7 @@ public class DatabaseManager {
         seasonRepository = mongoManager.create(SeasonRepository.class);
         potionPlayerRepository = mongoManager.create(PotionPlayerRepository.class);
 
-        //potionPlayerManager = new PotionPlayerManager(potionPlayerRepository)
+        potionPlayerManager = new PotionPlayerManager(potionPlayerRepository);
         seasonManager = new SeasonManager(seasonRepository);
     }
 

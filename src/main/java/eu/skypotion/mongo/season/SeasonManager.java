@@ -13,14 +13,13 @@ public class SeasonManager {
 
     private static final long DEFAULT_SEASON_LENGTH = TimeUnit.DAYS.convert(30, TimeUnit.MILLISECONDS);
 
-    @Getter
-    Season currentSeason;
+    public static Season CURRENT_SEASON;
     Map<Integer, Season> seasons;
     SeasonRepository seasonRepository;
 
     public SeasonManager(SeasonRepository seasonRepository) {
         this.seasonRepository = seasonRepository;
-        this.currentSeason = seasonRepository.findAll().stream().filter(Season::isActive).findFirst().orElse(null);
+        CURRENT_SEASON = seasonRepository.findAll().stream().filter(Season::isActive).findFirst().orElse(null);
         this.seasons = seasonRepository.findAll().stream().collect(Collectors.toMap(Season::getSeason, Function.identity()));
     }
 
@@ -44,15 +43,15 @@ public class SeasonManager {
             return;
         }
         current.setActive(true);
-        currentSeason = current;
+        CURRENT_SEASON = current;
         seasonRepository.save(current);
     }
 
     public void endSeason() {
-        currentSeason.setActive(false);
-        seasonRepository.save(currentSeason);
-        seasons.put(currentSeason.getSeason(), currentSeason);
-        currentSeason = null;
+        CURRENT_SEASON.setActive(false);
+        seasonRepository.save(CURRENT_SEASON);
+        seasons.put(CURRENT_SEASON.getSeason(), CURRENT_SEASON);
+        CURRENT_SEASON = null;
     }
 
     public Season getSeason(int season) {
@@ -69,10 +68,6 @@ public class SeasonManager {
 
     public Season getSeason(long start, long end) {
         return seasons.values().stream().filter(season -> season.getStart() == start && season.getEnd() == end).findFirst().orElse(null);
-    }
-
-    public Season getSeason() {
-        return currentSeason;
     }
 
 }

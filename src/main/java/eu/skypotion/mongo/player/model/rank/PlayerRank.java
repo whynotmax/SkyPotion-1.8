@@ -1,5 +1,6 @@
 package eu.skypotion.mongo.player.model.rank;
 
+import eu.koboo.en2do.repository.entity.Transient;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,5 +16,9 @@ public class PlayerRank {
     String suffix;
 
     boolean isTeam;
+
+
+    @Transient
+    public static PlayerRank DEFAULT = new PlayerRank("Default", "§7Spieler§8 • §7", "", false);
 
 }
