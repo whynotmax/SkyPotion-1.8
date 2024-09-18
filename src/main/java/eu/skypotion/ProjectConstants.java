@@ -9,4 +9,8 @@ public class ProjectConstants {
     public static final String INVALID_USAGE = PREFIX + "§cVerwendung: %s";
     public static final String INVALID_NUMBER = PREFIX + "§cBitte gebe eine gültige Zahl an§8!";
 
+
+
+    public static final String JOIN_MESSAGE_PREFIX = "§8┃ §c● §8┃ §7";
+
 }
