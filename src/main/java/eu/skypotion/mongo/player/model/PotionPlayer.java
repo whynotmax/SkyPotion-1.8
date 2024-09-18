@@ -21,10 +21,20 @@ public class PotionPlayer {
     @Id
     UUID uniqueId;
 
+    long lastSeen;
+    long playTime;
+
     PlayerRank rank;
 
     SeasonStats seasonStats;
     Stats generalStats;
+
+    @Transient
+    public void updatePlayTime() {
+        long currentTime = System.currentTimeMillis();
+        playTime += currentTime - lastSeen;
+        lastSeen = currentTime;
+    }
 
     @Transient
     public void addKill() {

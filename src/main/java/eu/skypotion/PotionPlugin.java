@@ -1,5 +1,6 @@
 package eu.skypotion;
 
+import eu.skypotion.manager.scoreboard.ScoreboardManager;
 import eu.skypotion.mongo.DatabaseManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,11 +9,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class PotionPlugin extends JavaPlugin {
 
     DatabaseManager databaseManager;
+    ScoreboardManager scoreboardManager;
 
     @Override
     public void onEnable() {
         databaseManager = new DatabaseManager();
-        // Plugin startup logic
+        scoreboardManager = new ScoreboardManager(this);
+
+
 
     }
 

@@ -1,11 +1,15 @@
 package eu.skypotion.listener;
 
 import eu.skypotion.PotionPlugin;
+import eu.skypotion.ProjectConstants;
 import eu.skypotion.mongo.player.model.PotionPlayer;
+import eu.skypotion.util.TimeUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.concurrent.TimeUnit;
 
 public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
 
@@ -13,7 +17,24 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
    public void handlePlayerJoinEvent(final PlayerJoinEvent event) {
        Player player = event.getPlayer();
        PotionPlayer potionPlayer = plugin.getDatabaseManager().getPotionPlayerManager().get(player.getUniqueId());
-       player.setPlayerListName(potionPlayer.getRank().getPrefix() + player.getName());
+
+       for (int i = 0; i < 256; i++) {
+           player.sendMessage("§" + String.valueOf(i).charAt(0));
+       }
+
+       plugin.getScoreboardManager().createScoreboard(player);
+
+       player.sendMessage("§r");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§a§lHerzlich Willkommen auf §6§lSkyPotion§8.§5§lEU");
+       player.sendMessage("§r");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§6§lSPENDEN §8» /§6shop");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§f§lVOTE §8» /§fvote");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§b§lDISCORD §8» /§bdiscord");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§2§lCHANGELOG §8» /§2changes");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§e§lTEAM §8» /§eteam");
+       player.sendMessage("§r");
+       player.sendMessage(ProjectConstants.PREFIX + "§7Du warst für §c" + TimeUtil.beautifyTime((System.currentTimeMillis() - potionPlayer.getLastSeen()), TimeUnit.MILLISECONDS, true, true) + " §7offline§8.");
+       potionPlayer.setLastSeen(System.currentTimeMillis());
    }
 
 }
