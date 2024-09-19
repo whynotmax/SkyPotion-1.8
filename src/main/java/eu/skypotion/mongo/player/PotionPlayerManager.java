@@ -7,8 +7,10 @@ import eu.skypotion.mongo.player.model.stats.Stats;
 import eu.skypotion.mongo.player.repository.PotionPlayerRepository;
 import eu.skypotion.mongo.season.SeasonManager;
 import eu.skypotion.mongo.season.model.Season;
+import eu.skypotion.perks.Perk;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -24,7 +26,7 @@ public class PotionPlayerManager {
     }
 
     public PotionPlayer create(UUID uniqueId) {
-        PotionPlayer potionPlayer = new PotionPlayer(uniqueId, PlayerRank.DEFAULT, SeasonStats.forSeason(SeasonManager.CURRENT_SEASON), new Stats());
+        PotionPlayer potionPlayer = new PotionPlayer(uniqueId, System.currentTimeMillis(), 0, PlayerRank.DEFAULT, SeasonStats.forSeason(SeasonManager.CURRENT_SEASON), new Stats(), new ArrayList<Perk>());
         potionPlayer.setUniqueId(uniqueId);
         potionPlayerRepository.save(potionPlayer);
         potionPlayerMap.put(uniqueId, potionPlayer);

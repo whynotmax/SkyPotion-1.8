@@ -6,9 +6,11 @@ import eu.skypotion.mongo.player.model.rank.PlayerRank;
 import eu.skypotion.mongo.player.model.season.SeasonStats;
 import eu.skypotion.mongo.player.model.stats.Stats;
 import eu.skypotion.mongo.season.model.Season;
+import eu.skypotion.perks.Perk;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -28,6 +30,8 @@ public class PotionPlayer {
 
     SeasonStats seasonStats;
     Stats generalStats;
+
+    List<Perk> boughtPerks;
 
     @Transient
     public void updatePlayTime() {
@@ -110,6 +114,21 @@ public class PotionPlayer {
     @Transient
     public void resetGeneralStats() {
         generalStats = Stats.create();
+    }
+
+    @Transient
+    public Perk getPerkByName(String name) {
+        return boughtPerks.stream().filter(perk -> perk.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    @Transient
+    public void addPerk(Perk perk) {
+        this.boughtPerks.add(perk.clone());
+    }
+
+    @Transient
+    public void removeTokens(double tokens) {
+        this.generalStats.setTokens(this.generalStats.getTokens() - tokens);
     }
 
 }

@@ -1,11 +1,8 @@
 package eu.skypotion.util;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-
 public class ProgressBar {
 
-    public static Component createProgressBar(double currentValue, double maxValue, int totalBars) {
+    public static String createProgressBar(double currentValue, double maxValue, int totalBars) {
 
         if (currentValue > maxValue) {
             throw new IllegalArgumentException("Current value cannot be greater than the max value.");
@@ -18,43 +15,43 @@ public class ProgressBar {
 
         if (currentValue <= 0) {
             StringBuilder progressBar = new StringBuilder();
-            progressBar.append("<dark_gray>[");
+            progressBar.append("§8[");
             for (int i = 0; i < halfBars; i++) {
-                progressBar.append("<red>");
+                progressBar.append("§c");
                 progressBar.append("|");
             }
-            progressBar.append("<gray> ").append(String.format("%.2f", 0.00D)).append("% ");
+            progressBar.append("§7 ").append(String.format("%.2f", 0.00D)).append("% ");
             for (int i = halfBars; i < totalBars; i++) {
-                progressBar.append("<red>");
+                progressBar.append("§c");
                 progressBar.append("|");
             }
-            progressBar.append("<dark_gray>]");
-            return MiniMessage.miniMessage().deserialize(progressBar.toString());
+            progressBar.append("§8]");
+            return (progressBar.toString());
         }
 
         StringBuilder progressBar = new StringBuilder();
-        progressBar.append("<dark_gray>[");
+        progressBar.append("§8[");
         for (int i = 0; i < halfBars; i++) {
             if (i < filledBars) {
-                progressBar.append("<green>");
+                progressBar.append("§a");
                 progressBar.append("|");
             } else {
-                progressBar.append("<red>");
+                progressBar.append("§c");
                 progressBar.append("|");
             }
         }
-        progressBar.append("<gray> ").append(String.format("%.2f", percent)).append("% ");
+        progressBar.append("§7 ").append(String.format("%.2f", percent)).append("% ");
         for (int i = halfBars; i < totalBars; i++) {
             if (i < filledBars) {
-                progressBar.append("<green>");
+                progressBar.append("§a");
                 progressBar.append("|");
             } else {
-                progressBar.append("<red>");
+                progressBar.append("§c");
                 progressBar.append("|");
             }
         }
-        progressBar.append("<dark_gray>]");
+        progressBar.append("§8]");
 
-        return MiniMessage.miniMessage().deserialize(progressBar.toString());
+        return (progressBar.toString());
     }
 }
