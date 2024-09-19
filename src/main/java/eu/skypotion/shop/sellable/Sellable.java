@@ -1,9 +1,9 @@
 package eu.skypotion.shop.sellable;
 
-public interface Sellable {
+import eu.skypotion.shop.buyable.Buyable;
+
+public interface Sellable extends Buyable {
 
     void setPrice(double price);
-
-    double getPrice();
 
 }
