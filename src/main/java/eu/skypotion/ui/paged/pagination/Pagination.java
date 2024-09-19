@@ -1,4 +1,4 @@
-package eu.skypotion.util;
+package eu.skypotion.ui.paged.pagination;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -60,4 +60,7 @@ public class Pagination<T> {
         return pages.getOrDefault(page, new ArrayList<>());
     }
 
+    public boolean isValidPage(int page) {
+        return pages.containsKey(page);
+    }
 }
