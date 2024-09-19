@@ -17,6 +17,8 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
    public void handlePlayerJoinEvent(final PlayerJoinEvent event) {
        Player player = event.getPlayer();
        PotionPlayer potionPlayer = plugin.getDatabaseManager().getPotionPlayerManager().get(player.getUniqueId());
+       long lastSeen = potionPlayer.getLastSeen();
+       long now = System.currentTimeMillis();
 
        for (int i = 0; i < 256; i++) {
            player.sendMessage("§" + String.valueOf(i).charAt(0));
@@ -32,8 +34,10 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
        player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§b§lDISCORD §8» /§bdiscord");
        player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§2§lCHANGELOG §8» /§2changes");
        player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§e§lTEAM §8» /§eteam");
-       player.sendMessage("§r");
-       player.sendMessage(ProjectConstants.PREFIX + "§7Du warst für §c" + TimeUtil.beautifyTime((System.currentTimeMillis() - potionPlayer.getLastSeen()), TimeUnit.MILLISECONDS, true, true) + " §7offline§8.");
+       if (lastSeen != now) {
+           player.sendMessage("§r");
+           player.sendMessage(ProjectConstants.PREFIX + "§7Du warst für §c" + TimeUtil.beautifyTime((System.currentTimeMillis() - potionPlayer.getLastSeen()), TimeUnit.MILLISECONDS, true, true) + " §7offline§8.");
+       }
        potionPlayer.setLastSeen(System.currentTimeMillis());
    }
 
