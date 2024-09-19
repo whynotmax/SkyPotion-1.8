@@ -1,15 +1,11 @@
 package eu.skypotion.buyable;
 
-public class Sellable {
+import lombok.experimental.NonFinal;
 
-    double price;
+public interface Sellable {
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+    void setPrice(double price);
 
-    public double getPrice() {
-        return price;
-    }
+    double getPrice();
 
 }
