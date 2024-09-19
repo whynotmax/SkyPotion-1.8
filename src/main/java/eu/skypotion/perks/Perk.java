@@ -1,6 +1,6 @@
 package eu.skypotion.perks;
 
-import eu.skypotion.buyable.Buyable;
+import eu.skypotion.shop.buyable.Buyable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

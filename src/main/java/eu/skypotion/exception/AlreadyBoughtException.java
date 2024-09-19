@@ -1,6 +1,6 @@
 package eu.skypotion.exception;
 
-import eu.skypotion.buyable.Buyable;
+import eu.skypotion.shop.buyable.Buyable;
 import eu.skypotion.mongo.player.model.PotionPlayer;
 
 import java.security.PrivilegedActionException;

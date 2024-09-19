@@ -1,4 +1,4 @@
-package eu.skypotion.buyable;
+package eu.skypotion.shop.buyable;
 
 public interface Buyable {
 

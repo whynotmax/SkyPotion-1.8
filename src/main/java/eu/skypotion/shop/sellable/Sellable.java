@@ -1,6 +1,4 @@
-package eu.skypotion.buyable;
-
-import lombok.experimental.NonFinal;
+package eu.skypotion.shop.sellable;
 
 public interface Sellable {
 

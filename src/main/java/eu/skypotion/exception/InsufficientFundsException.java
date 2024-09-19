@@ -1,7 +1,6 @@
 package eu.skypotion.exception;
 
-import eu.skypotion.PotionPlugin;
-import eu.skypotion.buyable.Buyable;
+import eu.skypotion.shop.buyable.Buyable;
 import eu.skypotion.mongo.player.model.PotionPlayer;
 import org.jetbrains.annotations.NotNull;
 
