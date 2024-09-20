@@ -1,9 +1,15 @@
 plugins {
     id 'java'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 group = 'eu.skypotion'
 version = '1.0-SNAPSHOT'
+
+application {
+    mainClassName = 'eu.skypotion.PotionPlugin'
+}
 
 repositories {
     mavenCentral()
