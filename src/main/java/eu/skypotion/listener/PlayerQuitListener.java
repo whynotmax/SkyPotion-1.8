@@ -12,6 +12,7 @@ public record PlayerQuitListener(PotionPlugin plugin) implements Listener {
     @EventHandler
     public void handlePlayerQuitEvent(final PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        event.setQuitMessage(null);
         PotionPlayer potionPlayer = plugin.getDatabaseManager().getPotionPlayerManager().get(player.getUniqueId());
         potionPlayer.updatePlayTime();
         plugin.getDatabaseManager().getPotionPlayerManager().save(potionPlayer);

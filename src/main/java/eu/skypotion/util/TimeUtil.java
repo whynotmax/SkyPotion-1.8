@@ -1,10 +1,10 @@
 package eu.skypotion.util;
 
+import com.avaje.ebean.validation.NotNull;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

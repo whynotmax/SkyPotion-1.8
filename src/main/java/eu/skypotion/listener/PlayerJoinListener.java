@@ -16,6 +16,7 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
    @EventHandler
    public void handlePlayerJoinEvent(final PlayerJoinEvent event) {
        Player player = event.getPlayer();
+       event.setJoinMessage(null);
        PotionPlayer potionPlayer = plugin.getDatabaseManager().getPotionPlayerManager().get(player.getUniqueId());
        long lastSeen = potionPlayer.getLastSeen();
        long now = System.currentTimeMillis();
@@ -27,7 +28,7 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
        plugin.getScoreboardManager().createScoreboard(player);
 
        player.sendMessage("§r");
-       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§a§lHerzlich Willkommen auf §6§lSkyPotion§8.§5§lEU");
+       player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§a§lHerzlich Willkommen auf §5§lSkyPotion§8.§5§lEU");
        player.sendMessage("§r");
        player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§6§lSPENDEN §8» /§6shop");
        player.sendMessage(ProjectConstants.JOIN_MESSAGE_PREFIX + "§f§lVOTE §8» /§fvote");

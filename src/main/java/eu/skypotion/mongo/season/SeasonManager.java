@@ -19,6 +19,7 @@ public class SeasonManager {
 
     public SeasonManager(SeasonRepository seasonRepository) {
         this.seasonRepository = seasonRepository;
+        this.seasonRepository.save(Season.NO_SEASON);
         CURRENT_SEASON = seasonRepository.findAll().stream().filter(Season::isActive).findFirst().orElse(null);
         this.seasons = seasonRepository.findAll().stream().collect(Collectors.toMap(Season::getSeason, Function.identity()));
     }

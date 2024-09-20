@@ -24,4 +24,8 @@ public class Perk implements Buyable {
     public Perk clone() {
         return (Perk) super.clone();
     }
+
+    public double getPrice() {
+        return price;
+    }
 }

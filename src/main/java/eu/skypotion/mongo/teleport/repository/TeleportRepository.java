@@ -9,8 +9,8 @@ import java.util.List;
 @Collection("teleports")
 public interface TeleportRepository extends Repository<Teleport, String> {
 
-    List<Teleport> findAllByAvailable(boolean available);
+    List<Teleport> findManyByAvailable(boolean available);
 
-    List<Teleport> findAllByWarp(boolean warp);
+    List<Teleport> findManyByWarp(boolean warp);
 
 }

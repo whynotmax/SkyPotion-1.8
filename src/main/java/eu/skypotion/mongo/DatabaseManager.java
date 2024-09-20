@@ -9,6 +9,8 @@ import eu.skypotion.mongo.season.repository.SeasonRepository;
 import eu.skypotion.mongo.teleport.TeleportManager;
 import eu.skypotion.mongo.teleport.repository.TeleportRepository;
 import lombok.Getter;
+import org.bson.codecs.Codec;
+import org.reflections.Reflections;
 
 @Getter
 public class DatabaseManager {
@@ -24,7 +26,16 @@ public class DatabaseManager {
     SeasonManager seasonManager;
 
     public DatabaseManager() {
-        mongoManager = new MongoManager(Credentials.of("nigga", "nigga"));
+        mongoManager = new MongoManager(Credentials.of("mongodb://keinepixel:r7M3LHbAVxq9uYX5Jdn6gsSFk4DfUGt2@45.81.232.200:27017/", "nigga"));
+
+        Reflections codecReflections = new Reflections("eu.skypotion.mongo.codec");
+        codecReflections.getSubTypesOf(Codec.class).forEach(codecClass -> {
+            try {
+                mongoManager = mongoManager.registerCodec((Codec<?>) codecClass.getDeclaredConstructor().newInstance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         seasonRepository = mongoManager.create(SeasonRepository.class);
         potionPlayerRepository = mongoManager.create(PotionPlayerRepository.class);
