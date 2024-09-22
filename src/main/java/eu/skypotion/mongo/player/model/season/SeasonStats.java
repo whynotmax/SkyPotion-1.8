@@ -17,6 +17,8 @@ public class SeasonStats {
 
     int currentSeason;
 
+    double elo;
+
     int kills;
     int deaths;
 
@@ -32,7 +34,26 @@ public class SeasonStats {
      */
     @Transient
     public static SeasonStats forSeason(Season season) {
-        return new SeasonStats(season.getSeason(), 0, 0, 0, 0, 0);
+        return new SeasonStats(season.getSeason(), 100.0D, 0, 0, 0, 0, 0);
     }
 
+    @Transient
+    public void addElo(double elo) {
+        this.elo += elo;
+    }
+
+    @Transient
+    public void removeElo(double elo) {
+        this.elo -= elo;
+    }
+
+    @Transient
+    public void addDeath() {
+        this.deaths++;
+    }
+
+    @Transient
+    public void addKill() {
+        this.kills++;
+    }
 }

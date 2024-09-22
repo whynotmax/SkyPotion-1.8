@@ -4,6 +4,7 @@ import eu.koboo.en2do.repository.entity.Id;
 import eu.koboo.en2do.repository.entity.Transient;
 import eu.skypotion.mongo.player.model.rank.PlayerRank;
 import eu.skypotion.mongo.player.model.season.SeasonStats;
+import eu.skypotion.mongo.player.model.settings.Settings;
 import eu.skypotion.mongo.player.model.stats.Stats;
 import eu.skypotion.mongo.season.model.Season;
 import eu.skypotion.perks.Perk;
@@ -11,6 +12,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -27,6 +29,8 @@ public class PotionPlayer {
     long playTime;
 
     PlayerRank rank;
+
+    Map<Settings, Integer> settings;
 
     SeasonStats seasonStats;
     Stats generalStats;
@@ -129,6 +133,31 @@ public class PotionPlayer {
     @Transient
     public void removeTokens(double tokens) {
         this.generalStats.setTokens(this.generalStats.getTokens() - tokens);
+    }
+
+    @Transient
+    public void removeShards(double shards) {
+        this.generalStats.setShards(this.generalStats.getShards() - shards);
+    }
+
+    @Transient
+    public int getSetting(Settings setting) {
+        return settings.getOrDefault(setting, setting.getDefaultValue());
+    }
+
+    @Transient
+    public void setSetting(Settings setting, int value) {
+        settings.put(setting, value);
+    }
+
+    @Transient
+    public void toggleSetting(Settings setting) {
+        int currentValue = settings.getOrDefault(setting, setting.getDefaultValue());
+        int newValue = currentValue + 1;
+        if (!setting.getPossibleValues().contains(newValue)) {
+            newValue = 0;
+        }
+        settings.put(setting, newValue);
     }
 
 }
