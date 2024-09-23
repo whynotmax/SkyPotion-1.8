@@ -1,5 +1,6 @@
 package eu.skypotion.listener;
 
+import eu.skypotion.PotionPlugin;
 import eu.skypotion.ProjectConstants;
 import eu.skypotion.util.combat.CombatLog;
 import lombok.experimental.FieldDefaults;
@@ -9,8 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
-public class EntityDamageByEntityListener implements Listener {
+public record EntityDamageByEntityListener(PotionPlugin plugin) implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
