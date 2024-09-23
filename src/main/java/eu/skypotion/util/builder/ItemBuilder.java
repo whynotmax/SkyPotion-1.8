@@ -23,6 +23,10 @@ public class ItemBuilder extends ItemStack {
         super(material);
     }
 
+    private ItemBuilder(ItemStack itemStack) {
+        super(itemStack);
+    }
+
     private ItemBuilder(Material material, int amount, short durability) {
         super(material, amount, durability);
     }
@@ -32,6 +36,10 @@ public class ItemBuilder extends ItemStack {
             return new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3);
         }
         return new ItemBuilder(material);
+    }
+
+    public static ItemBuilder of(ItemStack itemStack) {
+        return new ItemBuilder(itemStack);
     }
 
     public ItemBuilder withAmount(int amount) {

@@ -12,6 +12,9 @@ import java.util.List;
 public enum Settings {
 
     JOIN_MESSAGE("joinMessage", "Join Message", List.of("Erhalte die Standard-Join-Nachricht."), 0, List.of(0, 1)),
+
+    CRATE_CONFIRMATION("crateConfirmation", "Crate Bestätigung", List.of("Erhalte eine Bestätigung, wenn du eine Crate öffnen möchtest."), 0, List.of(0, 1)),
+    CRATE_ANIMATION("crateAnimation", "Crate Animation", List.of("Sehe die Animation bei dem Öffnen einer Crate."), 0, List.of(0, 1)),
     ;
 
     String name;
