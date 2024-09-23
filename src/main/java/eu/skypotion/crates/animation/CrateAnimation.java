@@ -10,7 +10,6 @@ import eu.skypotion.util.builder.ItemBuilder;
 import lombok.experimental.FieldDefaults;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,8 +25,6 @@ public class CrateAnimation {
     int spinSpeed;
     BukkitTask task;
 
-    boolean finished;
-
     final Inventory inventory;
 
 
@@ -35,7 +32,6 @@ public class CrateAnimation {
         this.plugin = plugin;
         this.crate = crate;
         this.currentTick = 0;
-        this.finished = false;
         this.spinSpeed = 1;
 
         this.inventory = Bukkit.createInventory(null, 27, replaceAllColorCodes(this.crate.getDisplayName()));
@@ -74,7 +70,11 @@ public class CrateAnimation {
     int i = 0;
 
     public void run(Player player) {
-        this.currentTick++;
+
+        if (currentTick < spinSpeed) {
+            currentTick++;
+            return;
+        }
 
         this.inventory.setItem(9, this.inventory.getItem(10) != null ? this.inventory.getItem(10) : ItemBuilder.AIR);
         this.inventory.setItem(10, this.inventory.getItem(11) != null ? this.inventory.getItem(11) : ItemBuilder.AIR);
@@ -87,11 +87,10 @@ public class CrateAnimation {
 
         if (i >= 30) {
             i = 0;
-            this.spinSpeed++;
+            this.spinSpeed += 2;
         }
 
         if (this.spinSpeed >= 20) {
-            this.finished = true;
             this.task.cancel();
 
             CrateItem item = getByItemStack(this.inventory.getItem(13));
