@@ -2,7 +2,6 @@ package eu.skypotion.listener;
 
 import eu.skypotion.ProjectConstants;
 import eu.skypotion.util.combat.CombatLog;
-import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;

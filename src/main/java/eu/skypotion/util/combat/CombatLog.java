@@ -36,6 +36,7 @@ public class CombatLog {
         combatLog.put(attacker, victim);
         combatLog.put(victim, attacker);
 
+
         tasks.put(attacker, Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             Player player = Bukkit.getPlayer(attacker);
             if (player != null) {
@@ -80,6 +81,8 @@ public class CombatLog {
     public void removeFromCombatLog(UUID player) {
         combatLogTime.remove(player);
         combatLog.remove(player);
+
+        plugin.getScoreboardManager().updateScoreboard(Bukkit.getPlayer(player));
 
         BukkitTask task = tasks.getOrDefault(player, null);
         if (task != null) {
