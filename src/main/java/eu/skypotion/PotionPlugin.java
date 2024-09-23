@@ -1,7 +1,9 @@
 package eu.skypotion;
 
+import eu.skypotion.crates.CrateManager;
 import eu.skypotion.manager.perk.PerkManager;
 import eu.skypotion.manager.scoreboard.ScoreboardManager;
+import eu.skypotion.manager.tablist.TablistManager;
 import eu.skypotion.mongo.DatabaseManager;
 import eu.skypotion.util.combat.CombatLog;
 import lombok.Getter;
@@ -21,7 +23,7 @@ public final class PotionPlugin extends JavaPlugin {
     DatabaseManager databaseManager;
     ScoreboardManager scoreboardManager;
     PerkManager perkManager;
-
+    TablistManager tablistManager;
 
     @Override
     public void onEnable() {
@@ -38,6 +40,8 @@ public final class PotionPlugin extends JavaPlugin {
 
         databaseManager = new DatabaseManager();
         scoreboardManager = new ScoreboardManager(this);
+        perkManager = new PerkManager();
+        tablistManager = new TablistManager(this);
 
         CombatLog.init(this);
 
@@ -58,6 +62,8 @@ public final class PotionPlugin extends JavaPlugin {
                 e.printStackTrace();
             }
         });
+
+        Bukkit.getScheduler().runTaskTimer(this, () -> Bukkit.getOnlinePlayers().forEach(tablistManager::setRank), 20*5L, 20*5L);
 
     }
 

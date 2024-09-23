@@ -5,6 +5,7 @@ import eu.skypotion.ProjectConstants;
 import eu.skypotion.mongo.player.model.PotionPlayer;
 import eu.skypotion.mongo.player.model.settings.Settings;
 import eu.skypotion.util.TimeUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,6 +30,8 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
        int joinMessage = potionPlayer.getSetting(Settings.JOIN_MESSAGE);
 
        plugin.getScoreboardManager().createScoreboard(player);
+
+       Bukkit.getOnlinePlayers().forEach(plugin.getTablistManager()::setRank);
 
        if (joinMessage == 0) {
            player.sendMessage("§r");

@@ -2,7 +2,6 @@ package eu.skypotion.mongo.player.model;
 
 import eu.koboo.en2do.repository.entity.Id;
 import eu.koboo.en2do.repository.entity.Transient;
-import eu.skypotion.mongo.player.model.rank.PlayerRank;
 import eu.skypotion.mongo.player.model.season.SeasonStats;
 import eu.skypotion.mongo.player.model.settings.Settings;
 import eu.skypotion.mongo.player.model.stats.Stats;
@@ -27,8 +26,6 @@ public class PotionPlayer {
 
     long lastSeen;
     long playTime;
-
-    PlayerRank rank;
 
     Map<Settings, Integer> settings;
 
@@ -81,11 +78,6 @@ public class PotionPlayer {
     @Transient
     public void addBattlePassLevel() {
         seasonStats.setBattlePassLevel(seasonStats.getBattlePassLevel() + 1);
-    }
-
-    @Transient
-    public void setRank(PlayerRank rank) {
-        this.rank = rank;
     }
 
     @Transient

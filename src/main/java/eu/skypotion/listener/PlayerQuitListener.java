@@ -49,6 +49,9 @@ public record PlayerQuitListener(PotionPlugin plugin) implements Listener {
                 opponentPlayer.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 20*3, 1, false, false));
             }
         }
+
+        Bukkit.getOnlinePlayers().forEach(plugin.getTablistManager()::setRank);
+
         potionPlayer.updatePlayTime();
         plugin.getDatabaseManager().getPotionPlayerManager().save(potionPlayer);
     }
