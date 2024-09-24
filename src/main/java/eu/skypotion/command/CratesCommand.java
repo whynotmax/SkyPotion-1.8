@@ -4,7 +4,6 @@ import eu.skypotion.PotionPlugin;
 import eu.skypotion.ProjectConstants;
 import eu.skypotion.crates.model.Crate;
 import eu.skypotion.crates.model.item.CrateItem;
-import eu.skypotion.mongo.player.model.PotionPlayer;
 import lombok.experimental.FieldDefaults;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
