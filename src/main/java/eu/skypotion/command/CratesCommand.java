@@ -41,10 +41,10 @@ public class CratesCommand extends Command {
                 player.sendMessage("§8» /§7crates setdisplayitem <name>");
                 player.sendMessage("§8» /§7crates setcollection <name> <collection>");
                 player.sendMessage("§8» /§7crates setenabled <name> <true/false>");
-                player.sendMessage("§8» /§7crates additem <name> <item> <chance>");
-                player.sendMessage("§8» /§7crates additem <name> <item> <chance> tokens <tokens>");
-                player.sendMessage("§8» /§7crates additem <name> <item> <chance> command <command>");
-                player.sendMessage("§8» /§7crates additem <name> <item> <chance> broadcast <message>");
+                player.sendMessage("§8» /§7crates additem <name> <chance>");
+                player.sendMessage("§8» /§7crates additem <name> <chance> tokens <tokens>");
+                player.sendMessage("§8» /§7crates additem <name> <chance> command <command>");
+                player.sendMessage("§8» /§7crates additem <name> <chance> broadcast <message>");
                 player.sendMessage("§8» /§7crates clear");
                 player.sendMessage("§8» /§7crates give <player> <crate> [amount]");
                 player.sendMessage("§8» /§7crates giveall <crate> [amount]");
@@ -74,7 +74,7 @@ public class CratesCommand extends Command {
                 String name = args[1];
                 StringBuilder displayName = new StringBuilder();
                 for (int i = 2; i < args.length; i++) {
-                    displayName.append(args[i]).append(" ");
+                    displayName.append(args[i].replace("&", "§")).append(" ");
                 }
                 Crate crate = plugin.getDatabaseManager().getCrateManager().get(name);
                 if (crate == null) {
@@ -105,7 +105,7 @@ public class CratesCommand extends Command {
             }
             if (args[0].equalsIgnoreCase("setcollection")) {
                 String name = args[1];
-                int collection = Integer.parseInt(args[2]);
+                String collection = args[2];
                 Crate crate = plugin.getDatabaseManager().getCrateManager().get(name);
                 if (crate == null) {
                     player.sendMessage(ProjectConstants.PREFIX + "§7Die Crate §c" + name + "§7 existiert nicht§8.");
@@ -132,9 +132,9 @@ public class CratesCommand extends Command {
             if (args[0].equalsIgnoreCase("additem")) {
                 String name = args[1];
                 ItemStack item = player.getInventory().getItemInHand();
-                double chance = Double.parseDouble(args[3]);
-                if (args[4].equalsIgnoreCase("tokens")) {
-                    double tokens = Double.parseDouble(args[5]);
+                double chance = Double.parseDouble(args[2]);
+                if (args.length == 5 && args[3].equalsIgnoreCase("tokens")) {
+                    double tokens = Double.parseDouble(args[4]);
                     CrateItem crateItem = new CrateItem();
                     crateItem.setItemStack(item);
                     crateItem.setChance(chance);
@@ -150,9 +150,9 @@ public class CratesCommand extends Command {
                     player.sendMessage(ProjectConstants.PREFIX + "§7Du hast ein Item zur Crate §c" + name + "§7 hinzugefügt§8.");
                     return true;
                 }
-                if (args[4].equalsIgnoreCase("command")) {
+                if (args.length >= 5 && args[3].equalsIgnoreCase("command")) {
                     StringBuilder command = new StringBuilder();
-                    for (int i = 5; i < args.length; i++) {
+                    for (int i = 4; i < args.length; i++) {
                         command.append(args[i]).append(" ");
                     }
                     CrateItem crateItem = new CrateItem();
@@ -170,9 +170,9 @@ public class CratesCommand extends Command {
                     player.sendMessage(ProjectConstants.PREFIX + "§7Du hast ein Item zur Crate §c" + name + "§7 hinzugefügt§8.");
                     return true;
                 }
-                if (args[4].equalsIgnoreCase("broadcast")) {
+                if (args.length >= 5 && args[3].equalsIgnoreCase("broadcast")) {
                     StringBuilder broadcastMessage = new StringBuilder();
-                    for (int i = 5; i < args.length; i++) {
+                    for (int i = 4; i < args.length; i++) {
                         broadcastMessage.append(args[i]).append(" ");
                     }
                     CrateItem crateItem = new CrateItem();
@@ -247,7 +247,7 @@ public class CratesCommand extends Command {
                     onlinePlayer.getInventory().addItem(plugin.getDatabaseManager().getCrateManager().get(crateName, amount));
                     onlinePlayer.sendMessage(ProjectConstants.PREFIX + "§7Du hast §c" + amount + "§8x '§r" + crate.getDisplayName() + "§8' §7erhalten§8.");
                 });
-                player.sendMessage(ProjectConstants.PREFIX + "§7Du hast allen Spielern §c" + amount + "§8x '§r" + crate.getDisplayName() + "§8' gegeben§8.");
+                player.sendMessage(ProjectConstants.PREFIX + "§7Du hast allen Spielern §c" + amount + "§8x '§r" + crate.getDisplayName() + "§8' §7gegeben§8.");
                 return true;
             }
             player.sendMessage(ProjectConstants.PREFIX + "§7Hilfe§8: /§a%s".formatted(s));
@@ -257,10 +257,10 @@ public class CratesCommand extends Command {
             player.sendMessage("§8» /§7crates setdisplayitem <name>");
             player.sendMessage("§8» /§7crates setcollection <name> <collection>");
             player.sendMessage("§8» /§7crates setenabled <name> <true/false>");
-            player.sendMessage("§8» /§7crates additem <name> <item> <chance>");
-            player.sendMessage("§8» /§7crates additem <name> <item> <chance> tokens <tokens>");
-            player.sendMessage("§8» /§7crates additem <name> <item> <chance> command <command>");
-            player.sendMessage("§8» /§7crates additem <name> <item> <chance> broadcast <message>");
+            player.sendMessage("§8» /§7crates additem <name> <chance>");
+            player.sendMessage("§8» /§7crates additem <name> <chance> tokens <tokens>");
+            player.sendMessage("§8» /§7crates additem <name> <chance> command <command>");
+            player.sendMessage("§8» /§7crates additem <name> <chance> broadcast <message>");
             player.sendMessage("§8» /§7crates clear");
             player.sendMessage("§8» /§7crates give <player> <crate> [amount]");
             player.sendMessage("§8» /§7crates giveall <crate> [amount]");

@@ -72,6 +72,17 @@ public abstract class SimpleUI {
         }
     }
 
+    public void fillBorders(ItemStack itemStack) {
+        for (int i = 0; i < 9; i++) {
+            inventory.setItem(i, itemStack);
+            inventory.setItem(size - 1 - i, itemStack);
+        }
+        for (int i = 0; i < size; i += 9) {
+            inventory.setItem(i, itemStack);
+            inventory.setItem(i + 8, itemStack);
+        }
+    }
+
     public void fillRow(int row, ItemStack item) {
         for (int i = row * 9; i < (row + 1) * 9; i++) {
             inventory.setItem(i, item);

@@ -25,7 +25,7 @@ public class Crate {
 
     boolean enabled;
 
-    int collection;
+    String collection;
     long timeCreated;
     String createdBy;
     long lastUpdated;

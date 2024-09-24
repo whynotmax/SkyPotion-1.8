@@ -12,4 +12,9 @@ public class DateUtil {
         return format.format(millis);
     }
 
+    public String formatDateAndTime(long millis) {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+        return format.format(millis);
+    }
+
 }

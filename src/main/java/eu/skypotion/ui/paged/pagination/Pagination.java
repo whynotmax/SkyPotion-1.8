@@ -3,6 +3,7 @@ package eu.skypotion.ui.paged.pagination;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +15,10 @@ import java.util.Map;
 public class Pagination<T> {
 
     Map<Integer, List<T>> pages;
-    int currentPage;
     int pageSize;
+
+    @NonFinal
+    int currentPage;
 
     public Pagination(int pageSize) {
         this.pages = new HashMap<>();
@@ -54,6 +57,18 @@ public class Pagination<T> {
 
     public boolean hasPreviousPage() {
         return pages.containsKey(currentPage - 1);
+    }
+
+    public void nextPage() {
+        if (hasNextPage()) {
+            currentPage++;
+        }
+    }
+
+    public void previousPage() {
+        if (hasPreviousPage()) {
+            currentPage--;
+        }
     }
 
     public List<T> getItems(int page) {

@@ -4,7 +4,9 @@ import eu.skypotion.crates.CrateManager;
 import eu.skypotion.manager.perk.PerkManager;
 import eu.skypotion.manager.scoreboard.ScoreboardManager;
 import eu.skypotion.manager.tablist.TablistManager;
+import eu.skypotion.manager.teleports.TeleportRequestManager;
 import eu.skypotion.mongo.DatabaseManager;
+import eu.skypotion.ui.UIManager;
 import eu.skypotion.util.combat.CombatLog;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -20,10 +22,12 @@ public final class PotionPlugin extends JavaPlugin {
 
     CommandMap commandMap;
 
+    TeleportRequestManager teleportRequestManager;
     DatabaseManager databaseManager;
     ScoreboardManager scoreboardManager;
     PerkManager perkManager;
     TablistManager tablistManager;
+    UIManager uiManager;
 
     @Override
     public void onEnable() {
@@ -42,6 +46,8 @@ public final class PotionPlugin extends JavaPlugin {
         scoreboardManager = new ScoreboardManager(this);
         perkManager = new PerkManager();
         tablistManager = new TablistManager(this);
+        uiManager = new UIManager(this);
+        teleportRequestManager = new TeleportRequestManager(this);
 
         CombatLog.init(this);
 

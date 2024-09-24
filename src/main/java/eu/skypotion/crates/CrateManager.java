@@ -1,28 +1,32 @@
 package eu.skypotion.crates;
 
+import eu.skypotion.crates.animation.CrateAnimation;
 import eu.skypotion.crates.model.Crate;
 import eu.skypotion.crates.repository.CrateRepository;
 import eu.skypotion.util.DateUtil;
 import eu.skypotion.util.builder.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CrateManager {
 
     CrateRepository crateRepository;
     Map<String, Crate> crateMap;
+    Map<UUID, CrateAnimation> animationMap;
 
     public CrateManager(CrateRepository crateRepository) {
         this.crateRepository = crateRepository;
         this.crateMap = this.crateRepository.findAll().stream().collect(HashMap::new, (map, crate) -> map.put(crate.getName(), crate), HashMap::putAll);
+        this.animationMap = new HashMap<>();
     }
 
     public Crate get(String name) {
         return this.crateMap.get(name);
+    }
+
+    public Crate getByDisplayName(String displayName) {
+        return this.crateMap.values().stream().filter(crate -> crate.getDisplayName().equals(displayName)).findFirst().orElse(null);
     }
 
     public void createCrate(String name, String createdBy) {
@@ -31,7 +35,7 @@ public class CrateManager {
         crate.setDisplayName(name);
         crate.setDisplayItem(ItemBuilder.AIR);
         crate.setEnabled(true);
-        crate.setCollection(1);
+        crate.setCollection("Standard");
         crate.setCreatedBy(createdBy);
         crate.setTimeCreated(System.currentTimeMillis());
         crate.setLastUpdated(System.currentTimeMillis());
@@ -79,8 +83,7 @@ public class CrateManager {
                 "§r",
                 "§aRechtsklick§8 ┃ §7Öffnen",
                 "§aLinksklick§8 ┃ §7Vorschau öffnen",
-                "§aShift + Linksklick§8 ┃ §7Mehr Informationen",
-                "§r"
+                "§aShift + Linksklick§8 ┃ §7Mehr Informationen"
         );
 
         List<ItemStack> itemStacks = new ArrayList<>();
@@ -88,6 +91,22 @@ public class CrateManager {
             itemStacks.add(itemBuilder);
         }
         return itemStacks.toArray(new ItemStack[0]);
+    }
+
+    public void startAnimation(UUID uuid, CrateAnimation animation) {
+        this.animationMap.put(uuid, animation);
+    }
+
+    public void stopAnimation(UUID uuid) {
+        this.animationMap.remove(uuid);
+    }
+
+    public boolean hasAnimation(UUID uuid) {
+        return this.animationMap.containsKey(uuid);
+    }
+
+    public CrateAnimation getAnimation(UUID uuid) {
+        return this.animationMap.get(uuid);
     }
 
 }

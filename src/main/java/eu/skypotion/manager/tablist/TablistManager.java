@@ -103,7 +103,7 @@ public class TablistManager {
     }
 
     public String getRankPrefixScoreboard(Player player) {
-        return getRankPrefixChat(player).split(" §8")[0];
+        return PermissionsEx.getUser(player).getGroupsNames()[0];
     }
 
     public String getRankPrefixChat(Player player) {
