@@ -68,7 +68,11 @@ public final class PotionPlugin extends JavaPlugin {
             try {
                 commandMap.register("skypotion", command.getDeclaredConstructor(PotionPlugin.class).newInstance(this));
             } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    commandMap.register("skypotion", command.getDeclaredConstructor().newInstance());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
