@@ -2,6 +2,8 @@ package eu.skypotion.mongo;
 
 import eu.koboo.en2do.Credentials;
 import eu.koboo.en2do.MongoManager;
+import eu.skypotion.casino.mongo.CasinoPlayerManager;
+import eu.skypotion.casino.mongo.repository.CasinoPlayerRepository;
 import eu.skypotion.crates.CrateManager;
 import eu.skypotion.crates.animation.CrateAnimation;
 import eu.skypotion.crates.repository.CrateRepository;
@@ -24,6 +26,7 @@ public class DatabaseManager {
     PotionPlayerRepository potionPlayerRepository;
     TeleportRepository teleportRepository;
     CrateRepository crateRepository;
+    CasinoPlayerRepository casinoPlayerRepository;
 
     PotionPlayerManager potionPlayerManager;
     TeleportManager teleportManager;
@@ -46,6 +49,7 @@ public class DatabaseManager {
         potionPlayerRepository = mongoManager.create(PotionPlayerRepository.class);
         teleportRepository = mongoManager.create(TeleportRepository.class);
         crateRepository = mongoManager.create(CrateRepository.class);
+        casinoPlayerRepository = mongoManager.create(CasinoPlayerRepository.class);
 
         potionPlayerManager = new PotionPlayerManager(potionPlayerRepository);
         seasonManager = new SeasonManager(seasonRepository);

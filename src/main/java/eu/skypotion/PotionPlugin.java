@@ -1,5 +1,6 @@
 package eu.skypotion;
 
+import eu.skypotion.casino.CasinoManager;
 import eu.skypotion.crates.CrateManager;
 import eu.skypotion.manager.perk.PerkManager;
 import eu.skypotion.manager.scoreboard.ScoreboardManager;
@@ -28,6 +29,7 @@ public final class PotionPlugin extends JavaPlugin {
     PerkManager perkManager;
     TablistManager tablistManager;
     UIManager uiManager;
+    CasinoManager casinoManager;
 
     @Override
     public void onEnable() {
@@ -48,6 +50,7 @@ public final class PotionPlugin extends JavaPlugin {
         tablistManager = new TablistManager(this);
         uiManager = new UIManager(this);
         teleportRequestManager = new TeleportRequestManager(this);
+        casinoManager = new CasinoManager(databaseManager);
 
         CombatLog.init(this);
 
