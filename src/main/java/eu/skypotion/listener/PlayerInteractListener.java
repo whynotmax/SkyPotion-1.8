@@ -6,6 +6,9 @@ import eu.skypotion.crates.animation.CrateAnimation;
 import eu.skypotion.crates.model.Crate;
 import eu.skypotion.inventory.CratePreviewInventory;
 import eu.skypotion.mongo.codec.ItemStackCodec;
+import eu.skypotion.mongo.player.model.PotionPlayer;
+import eu.skypotion.mongo.player.model.settings.Settings;
+import eu.skypotion.ui.accept.AcceptUI;
 import eu.skypotion.util.DateUtil;
 import eu.skypotion.util.builder.ItemBuilder;
 import org.bukkit.Material;
@@ -30,22 +33,67 @@ public record PlayerInteractListener(PotionPlugin plugin) implements Listener {
         Crate crate = plugin.getDatabaseManager().getCrateManager().getByDisplayName(displayName);
         if (crate == null) return;
         event.setCancelled(true);
+        PotionPlayer potionPlayer = plugin.getDatabaseManager().getPotionPlayerManager().get(player.getUniqueId());
         if (event.getAction().name().contains("RIGHT_CLICK_")) {
             if (!crate.isEnabled()) {
                 player.sendMessage(ProjectConstants.PREFIX + "§cDiese Crate ist deaktiviert.");
                 return;
             }
-            if (itemStack.getAmount() > 1) {
-                itemStack = itemStack.clone();
-                itemStack.setAmount(itemStack.getAmount() - 1);
-                player.setItemInHand(itemStack);
-            } else {
-                player.setItemInHand(ItemBuilder.AIR);
+            if (potionPlayer.getSetting(Settings.CRATE_CONFIRMATION) == 0) {
+                AcceptUI acceptUI = new AcceptUI(plugin, "Crate öffnen", "Crate §e" + crate.getDisplayName() + " §7öffnen", "§7Klicke auf die §a§lgrünen Gläser§7 um zu bestätigen") {
+                    @Override
+                    public void open(Player player) {
+
+                    }
+
+                    @Override
+                    public void close(Player player) {
+
+                    }
+
+                    @Override
+                    public void onAccept(Player player, boolean accepted) {
+                        ItemStack itemStack = player.getItemInHand();
+                        if (itemStack == null) return;
+                        if (itemStack.getType() == Material.AIR) return;
+                        if (!itemStack.hasItemMeta()) return;
+                        if (!itemStack.getItemMeta().hasDisplayName()) return;
+                        String displayName = itemStack.getItemMeta().getDisplayName();
+                        Crate crate = plugin.getDatabaseManager().getCrateManager().getByDisplayName(displayName);
+                        if (crate == null) return;
+                        if (accepted) {
+                            if (itemStack.getAmount() > 1) {
+                                itemStack = itemStack.clone();
+                                itemStack.setAmount(itemStack.getAmount() - 1);
+                                player.setItemInHand(itemStack);
+                            } else {
+                                player.setItemInHand(ItemBuilder.AIR);
+                            }
+                            if (potionPlayer.getSetting(Settings.CRATE_ANIMATION) == 0) {
+                                CrateAnimation animation = new CrateAnimation(plugin, crate);
+                                plugin.getDatabaseManager().getCrateManager().startAnimation(player.getUniqueId(), animation);
+                                animation.start(player);
+                                return;
+                            }
+                            CrateAnimation animation = new CrateAnimation(plugin, crate);
+                            animation.finish(player);
+                            return;
+                        }
+                        player.sendMessage(ProjectConstants.PREFIX + "§cDu hast die Aktion abgebrochen.");
+                        player.closeInventory();
+                    }
+
+                };
+                plugin.getUiManager().open(player, acceptUI);
+                return;
             }
-            //TODO: Open confirm menu
             CrateAnimation animation = new CrateAnimation(plugin, crate);
-            plugin.getDatabaseManager().getCrateManager().startAnimation(player.getUniqueId(), animation);
-            animation.start(player);
+            if (potionPlayer.getSetting(Settings.CRATE_ANIMATION) == 0) {
+                plugin.getDatabaseManager().getCrateManager().startAnimation(player.getUniqueId(), animation);
+                animation.start(player);
+                return;
+            }
+            animation.finish(player);
             return;
         }
         if (event.getAction().name().contains("LEFT_CLICK_")) {
