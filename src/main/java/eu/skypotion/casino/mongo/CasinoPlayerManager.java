@@ -21,7 +21,7 @@ public class CasinoPlayerManager {
     }
 
     public CasinoPlayer create(UUID uniqueId) {
-        CasinoPlayer casinoPlayer = new CasinoPlayer(uniqueId, 0, null, new DailyPotStats(), new RouletteStats());
+        CasinoPlayer casinoPlayer = new CasinoPlayer(uniqueId, 0, null, new DailyPotStats(), new RouletteStats(), 0L);
         casinoPlayerRepository.save(casinoPlayer);
         casinoPlayerMap.put(uniqueId, casinoPlayer);
         return casinoPlayer;

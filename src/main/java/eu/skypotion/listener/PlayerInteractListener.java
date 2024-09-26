@@ -40,7 +40,7 @@ public record PlayerInteractListener(PotionPlugin plugin) implements Listener {
                 return;
             }
             if (potionPlayer.getSetting(Settings.CRATE_CONFIRMATION) == 0) {
-                AcceptUI acceptUI = new AcceptUI(plugin, "Crate öffnen", "Crate §e" + crate.getDisplayName() + " §7öffnen", "§7Klicke auf die §a§lgrünen Gläser§7 um zu bestätigen") {
+                AcceptUI acceptUI = new AcceptUI(plugin, "Crate öffnen", "Crate §e" + crate.getDisplayName() + " §7öffnen", "§7Möchtest du diese Crate wirklich öffnen?") {
                     @Override
                     public void open(Player player) {
 

@@ -84,21 +84,34 @@ public abstract class SimpleUI {
     }
 
     public void fillRow(int row, ItemStack item) {
-        for (int i = row * 9; i < (row + 1) * 9; i++) {
-            inventory.setItem(i, item);
+        try {
+            for (int i = row * 9; i < (row + 1) * 9; i++) {
+                inventory.setItem(i, item);
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
     }
 
     public void fillRow(int row, ItemStack item, Consumer<InventoryClickEvent> clickEventConsumer) {
-        for (int i = row * 9; i < (row + 1) * 9; i++) {
-            inventory.setItem(i, item);
-            clickActions.put(i, clickEventConsumer);
+        try {
+            for (int i = row * 9; i < (row + 1) * 9; i++) {
+                inventory.setItem(i, item);
+                clickActions.put(i, clickEventConsumer);
+            }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
     }
 
     public void fillColumn(int column, ItemStack item) {
         for (int i = column; i < size; i += 9) {
             inventory.setItem(i, item);
+        }
+    }
+
+    public void fillColumn(int column, ItemStack item, Consumer<InventoryClickEvent> clickEventConsumer) {
+        for (int i = column; i < size; i += 9) {
+            inventory.setItem(i, item);
+            clickActions.put(i, clickEventConsumer);
         }
     }
 
