@@ -33,30 +33,30 @@ public class TimeUtil {
         long inSeconds = TimeUnit.SECONDS.convert(time, timeUnit);
         if (inSeconds >= 86400L) {
             long days = inSeconds / 86400L;
-            msg = msg + days + (useShortStrings ? "d " : (days == 1L ? " day, " : " days, "));
+            msg = msg + days + (useShortStrings ? "d " : (days == 1L ? " Tag, " : " Tage, "));
             inSeconds %= 86400L;
         }
         if (inSeconds >= 3600L) {
             long hours = inSeconds / 3600L;
-            msg = msg + hours + (useShortStrings ? "h " : (hours == 1L ? " hour, " : " hours, "));
+            msg = msg + hours + (useShortStrings ? "h " : (hours == 1L ? " Stunde, " : " Stunden, "));
             inSeconds %= 3600L;
         }
         if (inSeconds >= 60L) {
             long minutes = inSeconds / 60L;
-            msg = msg + minutes + (useShortStrings ? "m " : (minutes == 1L ? " minute, " : " minutes, "));
+            msg = msg + minutes + (useShortStrings ? "m " : (minutes == 1L ? " Minute, " : " Minuten, "));
             inSeconds %= 60L;
         }
         if (showSeconds) {
             if (inSeconds > 0L)
-                msg = msg + inSeconds + (useShortStrings ? "s " : (inSeconds == 1L ? " second" : " seconds"));
+                msg = msg + inSeconds + (useShortStrings ? "s " : (inSeconds == 1L ? " Sekunde" : " Sekunden"));
         }
         if (!msg.isEmpty())
             msg = msg.substring(0, msg.length() - (useShortStrings ? 1 : 0));
         else
-            msg = useShortStrings ? "0s" : "0 seconds";
+            msg = useShortStrings ? "0s" : "0 Sekunden";
 
         if (time == -1)
-            msg = "permanent";
+            msg = "Permanent";
         return msg;
     }
 

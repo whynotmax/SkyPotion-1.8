@@ -1,6 +1,7 @@
 package eu.skypotion.casino.mongo.model;
 
 import eu.koboo.en2do.repository.entity.Id;
+import eu.koboo.en2do.repository.entity.Transient;
 import eu.skypotion.casino.mongo.model.pass.CasinoPass;
 import eu.skypotion.casino.mongo.model.stats.dailypot.DailyPotStats;
 import eu.skypotion.casino.mongo.model.stats.roulette.RouletteStats;
@@ -28,5 +29,8 @@ public class CasinoPlayer {
 
     DailyPotStats dailyPotStats;
     RouletteStats rouletteStats;
+
+    @Transient
+    long joinedCasinoWorld;
 
 }

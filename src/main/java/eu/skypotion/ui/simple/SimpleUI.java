@@ -89,6 +89,13 @@ public abstract class SimpleUI {
         }
     }
 
+    public void fillRow(int row, ItemStack item, Consumer<InventoryClickEvent> clickEventConsumer) {
+        for (int i = row * 9; i < (row + 1) * 9; i++) {
+            inventory.setItem(i, item);
+            clickActions.put(i, clickEventConsumer);
+        }
+    }
+
     public void fillColumn(int column, ItemStack item) {
         for (int i = column; i < size; i += 9) {
             inventory.setItem(i, item);
