@@ -12,13 +12,13 @@ import java.util.List;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public enum Settings {
 
-    JOIN_MESSAGE("joinMessage", SettingsCategory.GENERAL, "Join Message", List.of("Erhalte die Standard-Join-Nachricht."), 0, List.of(0, 1), List.of("§aAktiviert", "§cDeaktiviert")),
+    JOIN_MESSAGE("joinMessage", SettingsCategory.GENERAL, "Join Message", List.of("§7Erhalte die Standard-Join-Nachricht."), 0, List.of(0, 1), List.of("§aAktiviert", "§cDeaktiviert")),
 
-    CRATE_CONFIRMATION("crateConfirmation", SettingsCategory.CRATES, "Crate Bestätigung", List.of("Erhalte eine Bestätigung, wenn du eine Crate öffnen möchtest."), 0, List.of(0, 1), List.of("§aAktiviert", "§cDeaktiviert")),
-    CRATE_ANIMATION("crateAnimation", SettingsCategory.CRATES, "Crate Animation", List.of("Sehe die Animation bei dem Öffnen einer Crate."), 0, List.of(0, 1), List.of("§aAktiviert", "§cDeaktiviert")),
+    CRATE_CONFIRMATION("crateConfirmation", SettingsCategory.CRATES, "Crate Bestätigung", List.of("§7Erhalte eine Bestätigung, wenn", "§7du eine Crate öffnen möchtest."), 0, List.of(0, 1), List.of("§aAktiviert", "§cDeaktiviert")),
+    CRATE_ANIMATION("crateAnimation", SettingsCategory.CRATES, "Crate Animation", List.of("§7Sehe die Animation bei dem Öffnen einer Crate."), 0, List.of(0, 1), List.of("§aAktiviert", "§cDeaktiviert")),
 
     //0 = all, 1 = friends, 2 = none
-    TELEPORT_REQUEST("teleportRequest", SettingsCategory.TELEPORT, "Teleport Anfrage", List.of("Erhalte eine Anfrage, wenn sich jemand zu dir teleportieren möchte."), 0, List.of(0, 1, 2), List.of("§aAlle", "§eFreunde", "§cKeine")),
+    TELEPORT_REQUEST("teleportRequest", SettingsCategory.TELEPORT, "Teleport Anfrage", List.of("§7Erhalte eine Anfrage, wenn sich jemand", "§7zu dir teleportieren möchte."), 0, List.of(0, 1, 2), List.of("§aAlle", "§eFreunde", "§cKeine")),
     ;
 
     String name;
@@ -31,4 +31,10 @@ public enum Settings {
 
     public static final Settings[] VALUES = values();
 
+    public static Settings getByName(String name) {
+        for (Settings settings : VALUES) {
+            if (settings.getDisplayName().equalsIgnoreCase(name)) return settings;
+        }
+        return null;
+    }
 }

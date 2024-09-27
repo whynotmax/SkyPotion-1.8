@@ -24,7 +24,7 @@ public class SettingsMainInventory extends PagedUI {
             ItemBuilder categoryItem = ItemBuilder.of(category.getDisplayMaterial());
             categoryItem.withName("§c" + category.getName());
             categoryItem.withLore(
-                    category.getDescription(),
+                    "§7" + category.getDescription(),
                     "",
                     "§7Klicke§8,§7 um die Katgeorie zu öffnen§8.",
                     "§8» §7Es sind §c" + category.howManySettingsInCategory() + " §7Einstellungen verfügbar§8."
@@ -80,7 +80,8 @@ public class SettingsMainInventory extends PagedUI {
             this.setItem(slot, getPagination().getItems(newPage).get(i), event -> {
                 SettingsCategory category = SettingsCategory.getByName(event.getCurrentItem().getItemMeta().getDisplayName().replace("§c", ""));
                 if (category == null) return;
-                //TODO: Open settings category inventory
+                PotionPlugin plugin = getPlugin();
+                plugin.getUiManager().open((Player) event.getWhoClicked(), new SettingsCategoryInventory(plugin, ((Player) event.getWhoClicked()), category));
             });
         }
     }

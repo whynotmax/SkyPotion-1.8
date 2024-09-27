@@ -41,4 +41,14 @@ public abstract class AcceptUI extends SimpleUI {
     }
 
     public abstract void onAccept(Player player, boolean accepted);
+
+    @Override
+    public void open(Player player) {
+
+    }
+
+    @Override
+    public void close(Player player) {
+
+    }
 }

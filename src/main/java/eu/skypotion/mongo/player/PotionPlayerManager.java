@@ -56,4 +56,10 @@ public class PotionPlayerManager {
         return potionPlayer;
     }
 
+    public void saveAll() {
+        for (PotionPlayer potionPlayer : potionPlayerMap.values()) {
+            potionPlayerRepository.save(potionPlayer);
+        }
+    }
+
 }

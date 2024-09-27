@@ -12,10 +12,11 @@ import org.bukkit.Material;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum SettingsCategory {
 
-    GENERAL("general", "Allgemein", Material.BOOK),
-    CRATES("crates", "Crates", Material.CHEST),
-    TELEPORT("teleport", "Teleport", Material.ENDER_PEARL),
-    OTHER("other", "Sonstiges", Material.TNT),
+    GENERAL("General", "Allgemeine Einstellungen", Material.BOOK),
+    CRATES("Crates", "Einstellungen für Crates", Material.CHEST),
+    PVP_PVE("PvP/PvE", "Einstellungen für PvP/PvE", Material.DIAMOND_SWORD),
+    TELEPORT("Teleport", "Einstellungen für Teleportanfragen", Material.ENDER_PEARL),
+    OTHER("Sonstiges", "Sonstige Einstellungen", Material.TNT),
     ;
 
     String name;

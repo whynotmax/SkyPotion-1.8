@@ -68,6 +68,13 @@ public class ItemBuilder extends ItemStack {
         return this;
     }
 
+    public ItemBuilder clearLore() {
+        ItemMeta meta = this.getItemMeta();
+        meta.setLore(null);
+        this.setItemMeta(meta);
+        return this;
+    }
+
     public ItemBuilder withDurability(short durability) {
         this.setDurability(durability);
         return this;

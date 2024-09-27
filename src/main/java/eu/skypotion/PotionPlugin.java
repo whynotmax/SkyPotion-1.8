@@ -2,6 +2,7 @@ package eu.skypotion;
 
 import eu.skypotion.casino.CasinoManager;
 import eu.skypotion.crates.CrateManager;
+import eu.skypotion.discord.DiscordBot;
 import eu.skypotion.manager.perk.PerkManager;
 import eu.skypotion.manager.scoreboard.ScoreboardManager;
 import eu.skypotion.manager.tablist.TablistManager;
@@ -23,6 +24,8 @@ public final class PotionPlugin extends JavaPlugin {
 
     CommandMap commandMap;
 
+    DiscordBot discordBot;
+
     TeleportRequestManager teleportRequestManager;
     DatabaseManager databaseManager;
     ScoreboardManager scoreboardManager;
@@ -39,18 +42,18 @@ public final class PotionPlugin extends JavaPlugin {
             bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 
             bukkitCommandMap.setAccessible(true);
-            commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+            this.commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
-        databaseManager = new DatabaseManager();
-        scoreboardManager = new ScoreboardManager(this);
-        perkManager = new PerkManager();
-        tablistManager = new TablistManager(this);
-        uiManager = new UIManager(this);
-        teleportRequestManager = new TeleportRequestManager(this);
-        casinoManager = new CasinoManager(databaseManager);
+        this.databaseManager = new DatabaseManager();
+        this.scoreboardManager = new ScoreboardManager(this);
+        this.perkManager = new PerkManager();
+        this.tablistManager = new TablistManager(this);
+        this.uiManager = new UIManager(this);
+        this.teleportRequestManager = new TeleportRequestManager(this);
+        this.casinoManager = new CasinoManager(databaseManager);
 
         CombatLog.init(this);
 
@@ -78,10 +81,13 @@ public final class PotionPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().runTaskTimer(this, () -> Bukkit.getOnlinePlayers().forEach(tablistManager::setRank), 20*5L, 20*5L);
 
+        this.discordBot = new DiscordBot(this.databaseManager);
+
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        this.getDatabaseManager().getPotionPlayerManager().saveAll();
+        getLogger().log(java.util.logging.Level.INFO, "Plugin disabled.");
     }
 }

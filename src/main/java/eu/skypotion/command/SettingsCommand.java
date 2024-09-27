@@ -2,6 +2,7 @@ package eu.skypotion.command;
 
 import eu.skypotion.PotionPlugin;
 import eu.skypotion.ProjectConstants;
+import eu.skypotion.inventory.settings.SettingsCategoryInventory;
 import eu.skypotion.inventory.settings.SettingsMainInventory;
 import eu.skypotion.mongo.player.model.settings.category.SettingsCategory;
 import org.bukkit.command.Command;
@@ -32,7 +33,7 @@ public class SettingsCommand extends Command {
                 plugin.getUiManager().open(player, new SettingsMainInventory(plugin));
                 return true;
             }
-            // Open the settings category inventory
+            plugin.getUiManager().open(player, new SettingsCategoryInventory(plugin, player, category));
             return false;
         }
         return false;

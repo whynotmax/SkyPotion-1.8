@@ -40,17 +40,7 @@ public record PlayerInteractListener(PotionPlugin plugin) implements Listener {
                 return;
             }
             if (potionPlayer.getSetting(Settings.CRATE_CONFIRMATION) == 0) {
-                AcceptUI acceptUI = new AcceptUI(plugin, "Crate öffnen", "Crate §e" + crate.getDisplayName() + " §7öffnen", "§7Möchtest du diese Crate wirklich öffnen?") {
-                    @Override
-                    public void open(Player player) {
-
-                    }
-
-                    @Override
-                    public void close(Player player) {
-
-                    }
-
+                AcceptUI acceptUI = new AcceptUI(plugin, "Crate öffnen", "§7Crate §e" + crate.getDisplayName() + " §7öffnen", "§7Möchtest du diese Crate wirklich öffnen?") {
                     @Override
                     public void onAccept(Player player, boolean accepted) {
                         ItemStack itemStack = player.getItemInHand();
@@ -69,6 +59,7 @@ public record PlayerInteractListener(PotionPlugin plugin) implements Listener {
                             } else {
                                 player.setItemInHand(ItemBuilder.AIR);
                             }
+                            player.closeInventory();
                             if (potionPlayer.getSetting(Settings.CRATE_ANIMATION) == 0) {
                                 CrateAnimation animation = new CrateAnimation(plugin, crate);
                                 plugin.getDatabaseManager().getCrateManager().startAnimation(player.getUniqueId(), animation);
@@ -88,6 +79,13 @@ public record PlayerInteractListener(PotionPlugin plugin) implements Listener {
                 return;
             }
             CrateAnimation animation = new CrateAnimation(plugin, crate);
+            if (itemStack.getAmount() > 1) {
+                itemStack = itemStack.clone();
+                itemStack.setAmount(itemStack.getAmount() - 1);
+                player.setItemInHand(itemStack);
+            } else {
+                player.setItemInHand(ItemBuilder.AIR);
+            }
             if (potionPlayer.getSetting(Settings.CRATE_ANIMATION) == 0) {
                 plugin.getDatabaseManager().getCrateManager().startAnimation(player.getUniqueId(), animation);
                 animation.start(player);
