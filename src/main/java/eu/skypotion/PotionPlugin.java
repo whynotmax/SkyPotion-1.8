@@ -81,7 +81,7 @@ public final class PotionPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().runTaskTimer(this, () -> Bukkit.getOnlinePlayers().forEach(tablistManager::setRank), 20*5L, 20*5L);
 
-        this.discordBot = new DiscordBot(this.databaseManager);
+        this.discordBot = new DiscordBot(this.databaseManager, this);
 
     }
 
