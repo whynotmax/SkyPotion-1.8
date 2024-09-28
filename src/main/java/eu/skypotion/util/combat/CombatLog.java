@@ -40,7 +40,9 @@ public class CombatLog {
         tasks.put(attacker, Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             Player player = Bukkit.getPlayer(attacker);
             if (player != null) {
-                ActionBar.sendActionBar(player, "§7Gegner§8: §c" + Bukkit.getPlayer(combatLog.get(attacker)).getName() + " §8┃ §7Verbleibend§8: §c" + TimeUtil.beautifyTime(getTimeRemaining(attacker), TimeUnit.MILLISECONDS) + "s");
+                Player attackerPlayer = Bukkit.getPlayer(combatLog.get(attacker));
+                if (attackerPlayer == null) return;
+                ActionBar.sendActionBar(player, "§7Gegner§8: §c" + attackerPlayer.getName() + " §8┃ §7Verbleibend§8: §c" + TimeUtil.beautifyTime(getTimeRemaining(attacker), TimeUnit.MILLISECONDS) + "s");
             }
             if (getTimeRemaining(attacker) == 0) {
                 removeFromCombatLog(attacker);

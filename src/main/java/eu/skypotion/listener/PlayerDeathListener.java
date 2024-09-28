@@ -1,5 +1,6 @@
 package eu.skypotion.listener;
 
+import eu.skypotion.PotionPlugin;
 import eu.skypotion.ProjectConstants;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -8,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class PlayerDeathListener implements Listener {
+public record PlayerDeathListener(PotionPlugin plugin) implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {

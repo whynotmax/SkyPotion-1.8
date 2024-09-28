@@ -29,10 +29,10 @@ public record PlayerPickupListener(PotionPlugin plugin) implements Listener {
 
             if(isCorrectShardItem) {
                 long amount = Long.parseLong(itemName.replaceAll("amount:", ""));
-                potionPlayer.addShards(amount);
-                item.remove();
+                potionPlayer.getGeneralStats().setShards(potionPlayer.getGeneralStats().getShards() + amount);
                 event.setCancelled(true);
-                ActionBar.sendActionBar(player, "§a+ " + amount + " Shards");
+                item.remove();
+                ActionBar.sendActionBar(player, "§a+" + amount + " Shards");
             }
         }
 

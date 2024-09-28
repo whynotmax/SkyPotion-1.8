@@ -84,7 +84,7 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
 
         potionPlayer.setLoginStreak(loginStreak);
 
-        if (true) { //!player.hasPlayedBefore()
+        if (!player.hasPlayedBefore()) {
             player.sendMessage("§r");
             player.sendMessage(ProjectConstants.PREFIX + "§7Du hast das neue §5§lSkyPotion§8.§5§lEU §7zum ersten mal betreten§8.");
             player.sendMessage(ProjectConstants.PREFIX + "§7Viel Spaß§8!");
