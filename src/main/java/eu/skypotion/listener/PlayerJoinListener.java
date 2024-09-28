@@ -2,14 +2,13 @@ package eu.skypotion.listener;
 
 import eu.skypotion.PotionPlugin;
 import eu.skypotion.ProjectConstants;
+import eu.skypotion.config.impl.PlayerRecordConfig;
 import eu.skypotion.mongo.location.model.MongoLocation;
 import eu.skypotion.mongo.player.model.PotionPlayer;
 import eu.skypotion.mongo.player.model.loginstreak.LoginStreak;
 import eu.skypotion.mongo.player.model.settings.Settings;
-import eu.skypotion.util.NumberUtil;
 import eu.skypotion.util.TimeUtil;
 import eu.skypotion.util.builder.ItemBuilder;
-import kotlin.UNINITIALIZED_VALUE;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -89,7 +88,9 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
             player.sendMessage(ProjectConstants.PREFIX + "§7Du hast das neue §5§lSkyPotion§8.§5§lEU §7zum ersten mal betreten§8.");
             player.sendMessage(ProjectConstants.PREFIX + "§7Viel Spaß§8!");
 
-            double newRecord = (double) plugin.getConfigManager().getConfig("PlayerRecordConfig").get("recordAllTime");
+            PlayerRecordConfig playerRecordConfig = plugin.getConfigManager().getConfig(PlayerRecordConfig.class);
+
+            double newRecord = playerRecordConfig.getRecordAllTime();
 
             if (newRecord <= 3) {
                 player.sendMessage("§r");
@@ -99,7 +100,7 @@ public record PlayerJoinListener(PotionPlugin plugin) implements Listener {
             }
 
             newRecord += 1;
-            plugin.getConfigManager().getConfig("PlayerRecordConfig").set("recordAllTime", newRecord);
+            playerRecordConfig.setRecordAllTime(newRecord);
 
             Bukkit.broadcastMessage("§r");
             Bukkit.broadcastMessage(ProjectConstants.PREFIX + "§7Der Spieler §c" + player.getName() + " §7ist neu§8! ( #" + NumberFormat.getInstance().format(Integer.parseInt(Double.toString(newRecord).replace(".0", ""))) + " )");

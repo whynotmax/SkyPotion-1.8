@@ -32,6 +32,8 @@ public class ProjectConstants {
     public static final long   BOT_JTC_VOICE_CHANNEL_ID = 1289179619223801886L;
     public static final long   BOT_MEMBER_ROLE_ID = 1289178393975324714L;
 
+    public static final String MAINTENANCE_KICK_MESSAGE = "§r\n" + PREFIX + "§cWartungsarbeiten §8«\n\n§7Wir sind bald wieder für dich da§8!\n\n§7Discord: §cskypotion.eu/discord";
+
     public static ItemStack SHARD_ITEM(long amount) {
         return ItemBuilder.of(Material.PRISMARINE_SHARD)
                 .withName("amount:" + amount)

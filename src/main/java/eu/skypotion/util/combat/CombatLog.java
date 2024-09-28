@@ -42,7 +42,7 @@ public class CombatLog {
             if (player != null) {
                 Player attackerPlayer = Bukkit.getPlayer(combatLog.get(attacker));
                 if (attackerPlayer == null) return;
-                ActionBar.sendActionBar(player, "§7Gegner§8: §c" + attackerPlayer.getName() + " §8┃ §7Verbleibend§8: §c" + TimeUtil.beautifyTime(getTimeRemaining(attacker), TimeUnit.MILLISECONDS) + "s");
+                ActionBar.sendActionBar(player, "§7Gegner§8: §c" + attackerPlayer.getName() + " §8┃ §7Verbleibend§8: §c" + TimeUtil.beautifyTime(getTimeRemaining(attacker), TimeUnit.MILLISECONDS));
             }
             if (getTimeRemaining(attacker) == 0) {
                 removeFromCombatLog(attacker);
@@ -54,7 +54,9 @@ public class CombatLog {
         tasks.put(victim, Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             Player player = Bukkit.getPlayer(victim);
             if (player != null) {
-                ActionBar.sendActionBar(player, "§7Gegner§8: §c" + Bukkit.getPlayer(combatLog.get(victim)).getName() + " §8┃ §7Verbleibend§8: §c" + TimeUtil.beautifyTime(getTimeRemaining(victim), TimeUnit.MILLISECONDS) + "s");
+                Player attackerPlayer = Bukkit.getPlayer(combatLog.get(victim));
+                if (attackerPlayer == null) return;
+                ActionBar.sendActionBar(player, "§7Gegner§8: §c" + attackerPlayer.getName() + " §8┃ §7Verbleibend§8: §c" + TimeUtil.beautifyTime(getTimeRemaining(victim), TimeUnit.MILLISECONDS));
             }
             if (getTimeRemaining(victim) == 0) {
                 removeFromCombatLog(victim);

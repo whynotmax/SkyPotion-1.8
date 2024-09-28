@@ -97,6 +97,7 @@ public final class PotionPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getDatabaseManager().getPotionPlayerManager().saveAll();
+        this.configManager.saveAll();
         getLogger().log(java.util.logging.Level.INFO, "Plugin disabled.");
     }
 }

@@ -1,32 +1,39 @@
 package eu.skypotion.config.impl;
 
 import eu.skypotion.config.JSONConfig;
-import eu.skypotion.config.path.JSONConfigPath;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.util.Map;
 
-@JSONConfigPath("plugins/SkyPotion/playerRecord.json")
+@Getter
+@Setter
 public class PlayerRecordConfig extends JSONConfig {
 
     double recordAllTime;
 
-    public PlayerRecordConfig(Map<String, Object> values) {
-        super(values);
+    public PlayerRecordConfig() {
+        File configFile = new File("plugins/SkyPotion/playerRecord.yml");
+        if (!configFile.exists()) {
+            this.recordAllTime = 0;
+            save();
+        }
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File("plugins/SkyPotion/playerRecord.yml"));
+        this.recordAllTime = config.getDouble("recordAllTime");
     }
 
     @Override
-    public void onLoad() {
-        this.recordAllTime = (double) get("recordAllTime");
+    public void save() {
+        YamlConfiguration config = new YamlConfiguration();
+        config.set("recordAllTime", recordAllTime);
+        try {
+            config.save(new File("plugins/SkyPotion/playerRecord.yml"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void onSave() {
-        set("recordAllTime", recordAllTime);
-    }
 
-    @Override
-    public void defaults() {
-        set("recordAllTime", 0);
-        this.recordAllTime = 0;
-    }
 }
