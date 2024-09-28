@@ -1,5 +1,9 @@
 package eu.skypotion;
 
+import eu.skypotion.util.builder.ItemBuilder;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
 public class ProjectConstants {
 
     public static final String PREFIX = "§8» §5§lSkyPotion§8 ┃ §7";
@@ -27,5 +31,11 @@ public class ProjectConstants {
     public static final long   BOT_BOTSPAM_CHANNEL_ID = 1289179531239755776L;
     public static final long   BOT_JTC_VOICE_CHANNEL_ID = 1289179619223801886L;
     public static final long   BOT_MEMBER_ROLE_ID = 1289178393975324714L;
+
+    public static ItemStack SHARD_ITEM(long amount) {
+        return ItemBuilder.of(Material.PRISMARINE_SHARD)
+                .withName("amount:" + amount)
+                .withGlow();
+    }
 
 }
