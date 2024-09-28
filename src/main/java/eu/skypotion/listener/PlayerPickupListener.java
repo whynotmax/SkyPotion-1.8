@@ -2,12 +2,14 @@ package eu.skypotion.listener;
 
 import eu.skypotion.PotionPlugin;
 import eu.skypotion.mongo.player.model.PotionPlayer;
+import eu.skypotion.util.ActionBar;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 public record PlayerPickupListener(PotionPlugin plugin) implements Listener {
@@ -28,7 +30,9 @@ public record PlayerPickupListener(PotionPlugin plugin) implements Listener {
             if(isCorrectShardItem) {
                 long amount = Long.parseLong(itemName.replaceAll("amount:", ""));
                 potionPlayer.addShards(amount);
-                event.getItem().remove();
+                item.remove();
+                event.setCancelled(true);
+                ActionBar.sendActionBar(player, "§a+ " + amount + " Shards");
             }
         }
 
