@@ -1,6 +1,7 @@
 package eu.skypotion.mongo.player;
 
 import eu.skypotion.mongo.player.model.PotionPlayer;
+import eu.skypotion.mongo.player.model.loginstreak.LoginStreak;
 import eu.skypotion.mongo.player.model.season.SeasonStats;
 import eu.skypotion.mongo.player.model.settings.Settings;
 import eu.skypotion.mongo.player.model.stats.Stats;
@@ -23,7 +24,7 @@ public class PotionPlayerManager {
     }
 
     public PotionPlayer create(UUID uniqueId) {
-        PotionPlayer potionPlayer = new PotionPlayer(uniqueId, System.currentTimeMillis(), 0, new HashMap<>(), SeasonStats.forSeason(SeasonManager.CURRENT_SEASON), new Stats(), new ArrayList<>());
+        PotionPlayer potionPlayer = new PotionPlayer(uniqueId, System.currentTimeMillis(), 0, new HashMap<>(), SeasonStats.forSeason(SeasonManager.CURRENT_SEASON), new Stats(), new ArrayList<>(), new LoginStreak(1, 0L));
         potionPlayer.setUniqueId(uniqueId);
         for (Settings setting : Settings.VALUES) {
             potionPlayer.getSettings().put(setting, setting.getDefaultValue());

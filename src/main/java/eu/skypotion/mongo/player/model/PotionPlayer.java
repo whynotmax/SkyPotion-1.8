@@ -2,6 +2,7 @@ package eu.skypotion.mongo.player.model;
 
 import eu.koboo.en2do.repository.entity.Id;
 import eu.koboo.en2do.repository.entity.Transient;
+import eu.skypotion.mongo.player.model.loginstreak.LoginStreak;
 import eu.skypotion.mongo.player.model.season.SeasonStats;
 import eu.skypotion.mongo.player.model.settings.Settings;
 import eu.skypotion.mongo.player.model.stats.Stats;
@@ -33,6 +34,8 @@ public class PotionPlayer {
     Stats generalStats;
 
     List<Perk> boughtPerks;
+
+    LoginStreak loginStreak;
 
     @Transient
     public void updatePlayTime() {

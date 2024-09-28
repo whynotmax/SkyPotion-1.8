@@ -1,6 +1,7 @@
 package eu.skypotion;
 
 import eu.skypotion.casino.CasinoManager;
+import eu.skypotion.config.loader.JSONConfigManager;
 import eu.skypotion.crates.CrateManager;
 import eu.skypotion.discord.DiscordBot;
 import eu.skypotion.manager.perk.PerkManager;
@@ -8,6 +9,7 @@ import eu.skypotion.manager.scoreboard.ScoreboardManager;
 import eu.skypotion.manager.tablist.TablistManager;
 import eu.skypotion.manager.teleports.TeleportRequestManager;
 import eu.skypotion.mongo.DatabaseManager;
+import eu.skypotion.runnables.AutoBroadcastRunnable;
 import eu.skypotion.ui.UIManager;
 import eu.skypotion.util.combat.CombatLog;
 import lombok.Getter;
@@ -33,6 +35,7 @@ public final class PotionPlugin extends JavaPlugin {
     TablistManager tablistManager;
     UIManager uiManager;
     CasinoManager casinoManager;
+    JSONConfigManager configManager;
 
     @Override
     public void onEnable() {
@@ -54,13 +57,15 @@ public final class PotionPlugin extends JavaPlugin {
         this.uiManager = new UIManager(this);
         this.teleportRequestManager = new TeleportRequestManager(this);
         this.casinoManager = new CasinoManager(databaseManager);
+        this.configManager = new JSONConfigManager();
 
         CombatLog.init(this);
 
         Reflections listenerReflections = new Reflections("eu.skypotion.listener");
         listenerReflections.getSubTypesOf(org.bukkit.event.Listener.class).forEach(listener -> {
             try {
-                getServer().getPluginManager().registerEvents(listener.getDeclaredConstructor(PotionPlugin.class).newInstance(this), this);
+                getServer().getPluginManager().registerEvents(listener.getDeclaredConstructor(PotionPlugin.class)
+                        .newInstance(this), this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -69,7 +74,8 @@ public final class PotionPlugin extends JavaPlugin {
         Reflections commandReflections = new Reflections("eu.skypotion.command");
         commandReflections.getSubTypesOf(Command.class).forEach(command -> {
             try {
-                commandMap.register("skypotion", command.getDeclaredConstructor(PotionPlugin.class).newInstance(this));
+                commandMap.register("skypotion", command.getDeclaredConstructor(PotionPlugin.class)
+                        .newInstance(this));
             } catch (Exception e) {
                 try {
                     commandMap.register("skypotion", command.getDeclaredConstructor().newInstance());
@@ -79,7 +85,10 @@ public final class PotionPlugin extends JavaPlugin {
             }
         });
 
-        Bukkit.getScheduler().runTaskTimer(this, () -> Bukkit.getOnlinePlayers().forEach(tablistManager::setRank), 20*5L, 20*5L);
+        Bukkit.getScheduler().runTaskTimer(this, () -> Bukkit.getOnlinePlayers().forEach(tablistManager::setRank),
+                20*5L, 20*5L);
+
+        Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastRunnable(this), 20*60*2L, 20*60*2L);
 
         this.discordBot = new DiscordBot(this.databaseManager, this);
 

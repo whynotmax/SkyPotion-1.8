@@ -67,7 +67,8 @@ public class SetupCommand extends DiscordSlashCommand {
                         **§8 - Kontakt**
                         `8.1 - Bei Fragen oder Problemen wende dich an das Team.`
                         """);
-                event.getGuild().getTextChannelById(ProjectConstants.BOT_RULES_CHANNEL_ID).sendMessageEmbeds(embed.build()).queue(RestAction.getDefaultSuccess());
+                event.getGuild().getTextChannelById(ProjectConstants.BOT_RULES_CHANNEL_ID)
+                        .sendMessageEmbeds(embed.build()).queue(RestAction.getDefaultSuccess());
                 return;
             }
             msg.editOriginal("Invalid setup option!").queue();
