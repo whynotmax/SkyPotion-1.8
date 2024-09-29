@@ -35,7 +35,9 @@ public class TebexGoalRunnable implements Runnable {
         hologram.getLines().appendText(ProjectConstants.PREFIX + "§cSpendenziel");
         hologram.getLines().appendText("§r");
         hologram.getLines().appendText("§8» §7Letzter Spender§8: §c-/-");
+        hologram.getLines().appendText("§r");
         hologram.getLines().appendText(ProgressBar.createProgressBar(10, 30, 50));
+        hologram.getLines().appendText("§r");
         hologram.getLines().appendText("§r");
         hologram.getLines().appendText("§8§m----------------------------§r");
 
@@ -49,8 +51,10 @@ public class TebexGoalRunnable implements Runnable {
         double[] goal = getGoal();
         TextHologramLine lastDonator = (TextHologramLine) hologram.getLines().get(4);
         lastDonator.setText("§8» §7Letzter Spender§8: §c" + getLastDonator());
-        TextHologramLine progressBar = (TextHologramLine) hologram.getLines().get(5);
-        progressBar.setText("§e0.00 EUR " + ProgressBar.createProgressBar(goal[1], goal[0], 50) + " §e" + NumberUtil.formatWithDecimalPlaces(goal[0], 2) + " EUR");
+        TextHologramLine progressBar = (TextHologramLine) hologram.getLines().get(6);
+        progressBar.setText(ProgressBar.createProgressBar(goal[1], goal[0], 50));
+        TextHologramLine infoLine = (TextHologramLine) hologram.getLines().get(7);
+        infoLine.setText("§8» §7Es wurden bereits §e" + NumberUtil.formatWithDecimalPlaces(goal[1], 2) + "€ §7von §e" + NumberUtil.formatWithDecimalPlaces(goal[0], 2) + "€ §7gespendet§8.");
         System.out.println("TebexGoalRunnable updated");
     }
 
