@@ -2,7 +2,6 @@ package eu.skypotion;
 
 import eu.skypotion.casino.CasinoManager;
 import eu.skypotion.config.loader.JSONConfigManager;
-import eu.skypotion.crates.CrateManager;
 import eu.skypotion.discord.DiscordBot;
 import eu.skypotion.manager.perk.PerkManager;
 import eu.skypotion.manager.scoreboard.ScoreboardManager;
@@ -10,9 +9,12 @@ import eu.skypotion.manager.tablist.TablistManager;
 import eu.skypotion.manager.teleports.TeleportRequestManager;
 import eu.skypotion.mongo.DatabaseManager;
 import eu.skypotion.runnables.AutoBroadcastRunnable;
+import eu.skypotion.runnables.TebexGoalRunnable;
 import eu.skypotion.ui.UIManager;
 import eu.skypotion.util.combat.CombatLog;
 import lombok.Getter;
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
+import me.filoghost.holographicdisplays.api.internal.HolographicDisplaysAPIProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -26,6 +28,8 @@ public final class PotionPlugin extends JavaPlugin {
 
     CommandMap commandMap;
 
+    HolographicDisplaysAPI hologramApi;
+
     DiscordBot discordBot;
 
     TeleportRequestManager teleportRequestManager;
@@ -36,6 +40,8 @@ public final class PotionPlugin extends JavaPlugin {
     UIManager uiManager;
     CasinoManager casinoManager;
     JSONConfigManager configManager;
+
+    TebexGoalRunnable tebexGoalRunnable;
 
     @Override
     public void onEnable() {
@@ -60,6 +66,8 @@ public final class PotionPlugin extends JavaPlugin {
         this.configManager = new JSONConfigManager();
 
         CombatLog.init(this);
+
+        this.hologramApi = HolographicDisplaysAPI.get(this);
 
         Reflections listenerReflections = new Reflections("eu.skypotion.listener");
         listenerReflections.getSubTypesOf(org.bukkit.event.Listener.class).forEach(listener -> {
@@ -90,6 +98,8 @@ public final class PotionPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().runTaskTimer(this, new AutoBroadcastRunnable(this), 20*60*2L, 20*60*2L);
 
+        Bukkit.getScheduler().runTaskTimer(this, (tebexGoalRunnable = new TebexGoalRunnable(this)), 20*5L, 20*30L);
+
         this.discordBot = new DiscordBot(this.databaseManager, this);
 
     }
@@ -98,6 +108,8 @@ public final class PotionPlugin extends JavaPlugin {
     public void onDisable() {
         this.getDatabaseManager().getPotionPlayerManager().saveAll();
         this.configManager.saveAll();
+        this.tebexGoalRunnable.getHologram().delete();
+
         getLogger().log(java.util.logging.Level.INFO, "Plugin disabled.");
     }
 }

@@ -34,6 +34,8 @@ public class ProjectConstants {
 
     public static final String MAINTENANCE_KICK_MESSAGE = "§r\n" + PREFIX + "§cWartungsarbeiten §8«\n\n§7Wir sind bald wieder für dich da§8!\n\n§7Discord: §cskypotion.eu/discord";
 
+    public static final String TEBEX_SECRET = "e634bf4c027c5b7004bb17cdff1ece75b9c20881";
+
     public static ItemStack SHARD_ITEM(long amount) {
         return ItemBuilder.of(Material.PRISMARINE_SHARD)
                 .withName("amount:" + amount)
