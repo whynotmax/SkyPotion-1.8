@@ -1,11 +1,13 @@
 package eu.skypotion.discord.command;
 
 import eu.skypotion.discord.DiscordBot;
+import lombok.Getter;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
 
+@Getter
 public abstract class DiscordSlashCommand extends ListenerAdapter {
 
     DiscordBot bot;

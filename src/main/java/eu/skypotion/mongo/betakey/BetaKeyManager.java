@@ -61,4 +61,8 @@ public class BetaKeyManager {
         return betaKeys.stream().anyMatch(bk -> bk.getKey().equals(key) && bk.isLinked());
     }
 
+    public void deleteKey(BetaKey betaKey) {
+        betaKeys.remove(betaKey);
+        betaKeyRepository.delete(betaKey);
+    }
 }

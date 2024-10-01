@@ -2,6 +2,8 @@ package eu.skypotion.discord;
 
 import eu.skypotion.PotionPlugin;
 import eu.skypotion.ProjectConstants;
+import eu.skypotion.discord.command.impl.BetaKeyCommand;
+import eu.skypotion.discord.command.impl.SetupCommand;
 import eu.skypotion.mongo.DatabaseManager;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -44,14 +46,8 @@ public class DiscordBot {
             }
         });
 
-        Reflections commandReflections = new Reflections("eu.skypotion.discord.command.impl");
-        commandReflections.getSubTypesOf(net.dv8tion.jda.api.hooks.ListenerAdapter.class).forEach(command -> {
-            try {
-                builder.addEventListeners(command.getDeclaredConstructor(DiscordBot.class).newInstance(this));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        builder.addEventListeners(new SetupCommand(this));
+        builder.addEventListeners(new BetaKeyCommand(this));
 
         try {
             jda = builder.build();
@@ -61,11 +57,17 @@ public class DiscordBot {
                 jda.getPresence().setActivity(Activity.of(Activity.ActivityType.PLAYING, "mit " + Bukkit.getOnlinePlayers().size() + " Spielern"));
             }, 0, 20 * 5L);
 
-            CommandListUpdateAction commands = jda.updateCommands();
+            CommandListUpdateAction commands = jda.getGuildById(ProjectConstants.BOT_GUILD_ID).updateCommands();
 
             commands = commands.addCommands(
                     Commands.slash("setup", "Setup the Discord Bot")
                             .addOption(OptionType.STRING, "what", "What to setup", true)
+                            .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR)),
+                    Commands.slash("betakey", "Redeem a Beta Key")
+                            .addOption(OptionType.STRING, "action", "The action to perform", true)
+                            .addOption(OptionType.STRING, "key", "The key to view info", false)
+                            .addOption(OptionType.INTEGER, "value", "The amount of keys to generate", false)
+                            .addOption(OptionType.STRING, "username", "Check if the user already got a beta key", false)
                             .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
             );
 

@@ -9,7 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.RestAction;
 
-import java.awt.*;
+import java.awt.Color;
+
 
 public class SetupCommand extends DiscordSlashCommand {
 

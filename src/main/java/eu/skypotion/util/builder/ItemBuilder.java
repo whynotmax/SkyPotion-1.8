@@ -92,7 +92,9 @@ public class ItemBuilder extends ItemStack {
     }
 
     public ItemBuilder withEnchantment(Enchantment enchantment, int level) {
-        this.addEnchantment(enchantment, level);
+        ItemMeta meta = this.getItemMeta();
+        meta.addEnchant(enchantment, level, true);
+        this.setItemMeta(meta);
         return this;
     }
 

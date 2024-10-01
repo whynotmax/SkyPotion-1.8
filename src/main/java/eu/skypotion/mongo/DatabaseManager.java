@@ -7,6 +7,8 @@ import eu.skypotion.casino.mongo.repository.CasinoPlayerRepository;
 import eu.skypotion.crates.CrateManager;
 import eu.skypotion.crates.animation.CrateAnimation;
 import eu.skypotion.crates.repository.CrateRepository;
+import eu.skypotion.mongo.betakey.BetaKeyManager;
+import eu.skypotion.mongo.betakey.repository.BetaKeyRepository;
 import eu.skypotion.mongo.location.LocationManager;
 import eu.skypotion.mongo.location.repository.MongoLocationRepository;
 import eu.skypotion.mongo.player.PotionPlayerManager;
@@ -30,12 +32,14 @@ public class DatabaseManager {
     CrateRepository crateRepository;
     CasinoPlayerRepository casinoPlayerRepository;
     MongoLocationRepository locationRepository;
+    BetaKeyRepository betaKeyRepository;
 
     PotionPlayerManager potionPlayerManager;
     TeleportManager teleportManager;
     SeasonManager seasonManager;
     CrateManager crateManager;
     LocationManager locationManager;
+    BetaKeyManager betaKeyManager;
 
     public DatabaseManager() {
         mongoManager = new MongoManager(Credentials.of("mongodb://keinepixel:r7M3LHbAVxq9uYX5Jdn6gsSFk4DfUGt2@45.81.232.200:27017/", "nigga"));
@@ -55,12 +59,14 @@ public class DatabaseManager {
         crateRepository = mongoManager.create(CrateRepository.class);
         casinoPlayerRepository = mongoManager.create(CasinoPlayerRepository.class);
         locationRepository = mongoManager.create(MongoLocationRepository.class);
+        betaKeyRepository = mongoManager.create(BetaKeyRepository.class);
 
         potionPlayerManager = new PotionPlayerManager(potionPlayerRepository);
         seasonManager = new SeasonManager(seasonRepository);
         teleportManager = new TeleportManager(teleportRepository);
         crateManager = new CrateManager(crateRepository);
         locationManager = new LocationManager(locationRepository);
+        betaKeyManager = new BetaKeyManager(betaKeyRepository);
     }
 
 }
