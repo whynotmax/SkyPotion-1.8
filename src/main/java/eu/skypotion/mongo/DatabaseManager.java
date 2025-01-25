@@ -42,7 +42,7 @@ public class DatabaseManager {
     BetaKeyManager betaKeyManager;
 
     public DatabaseManager() {
-        mongoManager = new MongoManager(Credentials.of("mongodb://keinepixel:r7M3LHbAVxq9uYX5Jdn6gsSFk4DfUGt2@45.81.232.200:27017/", "nigga"));
+        mongoManager = new MongoManager(Credentials.of("mongodb://keinepixel:xxx@45.81.232.200:27017/", "xxx"));
 
         Reflections codecReflections = new Reflections("eu.skypotion.mongo.codec");
         codecReflections.getSubTypesOf(Codec.class).forEach(codecClass -> {
